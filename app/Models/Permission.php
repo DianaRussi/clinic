@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Permission extends Model
 {
     protected $fillable = [
         'name',
@@ -13,13 +13,13 @@ class Role extends Model
         'description',
     ];
 
-    // RELACIONES
-        // un rol tiene muchos permisos
-        public function permissions()
+     // RELACIONES
+        // Un permiso tiene un rol
+        public function role()
         {
-        return $this->hasMany('App\Models\Permission');
+        return $this->belogsTo('App\Models\Role');
         }
-        //un rol tiene muchos usuarios 
+        //un permiso tiene muchos usuarios
         public function users()
         {
             return $this->belongsToMany('App\Models\User')->withTimestamp();
