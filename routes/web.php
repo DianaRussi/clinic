@@ -22,8 +22,16 @@ Route::get('/', function () {
 Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-/* 
-Route::get('/email/verify', function () {
+
+Route::get('test', function(){
+    return view('pages.home');
+});
+
+Route::get('demo', function(){
+    return view('theme.backoffice.pages.demo');
+});
+
+/* Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
  */
