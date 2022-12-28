@@ -20,6 +20,7 @@
         <!-- END LEFT SIDEBAR NAV-->
         <!-- START CONTENT -->
         <section id="content">
+          @include('theme.backoffice.layouts.includes.breadcrumbs')
           <!--start container-->
           <div class="container">@yield('content')</div>
           <!--end container-->

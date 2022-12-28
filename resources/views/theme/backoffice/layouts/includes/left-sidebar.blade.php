@@ -46,12 +46,34 @@
         <li class="no-padding">
             <ul class="collapsible" data-collapsible="accordion">
                 <li class="bold">
-                    <a class="waves-effect waves-cyan" href="index.html">
+                    <a class="waves-effect waves-cyan" href="#">
                         <i class="material-icons">
                             pie_chart_outlined
                         </i>
                         <span class="nav-text">
                             Panel de administración
+                        </span>
+                    </a>
+                </li>
+
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="{{ route('backoffice.role.index') }}">
+                        <i class="material-icons">
+                            perm_identity
+                        </i>
+                        <span class="nav-text">
+                            Roles del Sistema
+                        </span>
+                    </a>
+                </li>
+
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" href="{{ route('backoffice.permission.index') }}">
+                        <i class="material-icons">
+                            vpn_key
+                        </i>
+                        <span class="nav-text">
+                            Permisos del Sistema
                         </span>
                     </a>
                 </li>
