@@ -46,12 +46,24 @@
         <li class="no-padding">
             <ul class="collapsible" data-collapsible="accordion">
                 <li class="bold">
-                    <a class="waves-effect waves-cyan" href="#">
+                    <a class="waves-effect waves-cyan" href="{{ route('backoffice.admin.show') }}" >
                         <i class="material-icons">
                             pie_chart_outlined
                         </i>
                         <span class="nav-text">
                             Panel de administración
+                        </span>
+                    </a>
+                </li>
+
+                <li class="bold">
+                    <a class="waves-effect waves-cyan" 
+                        href="{{ route('backoffice.user.index') }}">
+                        <i class="material-icons">
+                            people
+                        </i>
+                        <span class="nav-text">
+                            Usuarios del Sistema
                         </span>
                     </a>
                 </li>
@@ -77,7 +89,6 @@
                         </span>
                     </a>
                 </li>
-
             </ul>
         </li>
     </ul>

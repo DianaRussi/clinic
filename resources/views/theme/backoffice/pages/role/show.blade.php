@@ -6,7 +6,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li> <a href="{{ route('backoffice.role.create') }}">Roles del sistema</a></li>
+    <li> <a href="{{ route('backoffice.role.index') }}">Roles del sistema</a></li>
     <li>{{ $role->name }}</li>
 @endsection
 
