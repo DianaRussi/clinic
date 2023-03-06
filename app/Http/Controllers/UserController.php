@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Permission;
 class UserController extends Controller
 {
     public function index()
@@ -17,12 +19,15 @@ class UserController extends Controller
 
     public function create()
     {
-        //
+        return view('theme.backoffice.pages.user.create',[
+            'roles' => Role::all(),
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request, User $user)
     {
-        //
+       $user = $user->store($request);
+       return redirect()->route('backoffice.user.show', $user);
     }
 
     public function show(User $user)
@@ -32,19 +37,24 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('theme.backoffice.pages.user.edit',[
+            'user' => $user,
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, User $user)
     {
-        //
+        $user->my_update($request);
+        return redirect()->route('backoffice.user.show', $user);
     }
 
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        toast('Usuario eliminado','success','top-right');
+        return redirect()->route('backoffice.user.index');
     }
 
     public function assign_role(User $user)

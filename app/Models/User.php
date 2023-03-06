@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -15,6 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name',
+        'dob',
         'email',
         'password',
     ];
@@ -22,6 +24,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $dates = [
+        'dob'
     ];
 
     protected $casts = [
@@ -40,10 +46,27 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->belongsToMany('App\Models\Role')->withTimestamps();
         }
     // ALMACENAMIENTO
-    public function role_assignment($request){
-        $this->permission_mass_assignment($request->roles);
-        $this->roles()->sync($request->roles);
-        $this->verify_permission_integrity($request->roles);
+    public function store($request)
+    {
+        $user = self::create($request->all());
+        $user->update(['password' =>Hash::make($request->password)]);
+        $roles = [$request->role];
+        $user->role_assignment(null, $roles);
+        toast('Usuario creado con éxito','success','top-right');
+        return $user;
+    }
+
+    public function my_update($request)
+    {
+         self::update($request->all());
+         toast('Usuario actualizado','success','top-right');
+    }
+
+    public function role_assignment($request, array $roles = null){
+        $roles = (is_null($roles)) ? $request->roles : $roles;
+        $this->permission_mass_assignment($roles);
+        $this->roles()->sync($roles);
+        $this->verify_permission_integrity($roles);
         toast('Roles asignados','success','top-right');
     }
     // VALIDACIÓN
@@ -71,6 +94,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
     // RECUPERACIÓN DE INFORMACIÓN
+    public function age()
+    {
+        if(!is_null($this->dob))
+        {
+            $age = $this->dob->age;
+            $years = ($age == 1) ? 'año' : 'años';
+            $msj = $age . ' ' . $years;
+        }else{
+            $msj = 'indefinido';
+        }
+        return $msj;
+    }
     // OTRAS OPERACIONES 
     public function verify_permission_integrity(array $roles){
         $permissions = $this->permissions;

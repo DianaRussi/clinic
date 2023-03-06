@@ -33,7 +33,7 @@
                                         <td> <a href="{{ route('backoffice.user.show', $user) }}">
                                             {{ $user->name }}</a>
                                         </td>
-                                        <td>{{ $user->dob }}</td>
+                                        <td>{{ $user->age() }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td> <a href="{{ route('backoffice.user.edit', $user) }}">
                                             Editar</a>
