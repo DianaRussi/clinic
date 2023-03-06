@@ -20,7 +20,9 @@ Auth::routes(['verify'=>true]);
 // BACKOFFICE
 Route::group(['middleware' => ['auth'], 'as' => 'backoffice.' ], function(){
     Route::get('admin', [AdminController::class, 'show'])->name('admin.show');
-    Route::resource('user',UserController::class);
+    Route::get('user/import', [UserController::class, 'import'])->name('user.import');
+    Route::post('user/make_import', [UserController::class, 'make_import'])->name('user.make_import');
+    Route::resource('user',UserController::class); 
     Route::get('user/{user}/assign_role', [UserController::class, 'assign_role'] )->name('user.assign_role');
     Route::post('user/{user}/role_assignment',[UserController::class,'role_assignment'])->name('user.role_assignment');
     Route::resource('role',RoleController::class);
