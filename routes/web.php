@@ -36,3 +36,8 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.' ], function(){
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// FRONTOFFICE
+Route::group(['as' => 'frontoffice.' ], function(){
+    Route::get('profile', [UserController::class,'profile'])->name('user.profile');
+});
