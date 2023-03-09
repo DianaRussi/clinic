@@ -10,27 +10,27 @@ class RolePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user)
+    public function index(User $user)
     {
-        //
+        return $user->has_permission('index-role');
     }
 
     public function view(User $user, Role $role)
     {
-        //
+        return $user->has_permission('view-role');
     }
     public function create(User $user)
     {
-        return true;
+        return $user->has_permission('create-role');
     }
 
     public function update(User $user, Role $role)
     {
-        //
+        return $user->has_permission('update-role');
     }
     public function delete(User $user, Role $role)
     {
-        //
+        return $user->has_permission('delete-role');
     }
 
     public function restore(User $user, Role $role)

@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('index', User::class);
         return view('theme.backoffice.pages.user.index',[
             'users' => User::all(),
         ]);
@@ -20,6 +21,7 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('create', User::class);
         return view('theme.backoffice.pages.user.create',[
             'roles' => Role::all(),
         ]);
@@ -33,6 +35,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $this->authorize('view', $user);
         return view('theme.backoffice.pages.user.show',[
             'user' => $user,
         ]);
@@ -40,6 +43,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('theme.backoffice.pages.user.edit',[
             'user' => $user,
         ]);
@@ -53,6 +57,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
         $user->delete();
         toast('Usuario eliminado','success','top-right');
         return redirect()->route('backoffice.user.index');
@@ -60,6 +65,7 @@ class UserController extends Controller
     // mostrar formulario para asignar rol
     public function assign_role(User $user)
     {
+        $this->authorize('assign_role', $user);
         return view('theme.backoffice.pages.user.assign_role',[
             'user' => $user,
             'roles' => Role::all(),
@@ -68,12 +74,14 @@ class UserController extends Controller
     // asignar los roles en la tabla pivote de la bd
     public function role_assignment(Request $request, User $user)
     {
+        $this->authorize('assign_role', $user);
         $user->role_assignment($request);
         return redirect()->route('backoffice.user.show', $user);
     }
     // mostrar los formularios para asignar los permisos
     public function assign_permission(User $user)
     {
+        $this->authorize('assign_permission', $user);
         return view('theme.backoffice.pages.user.assign_permission',[
             'user' => $user,
             'roles' => $user->roles,
@@ -82,6 +90,7 @@ class UserController extends Controller
     // asignar permisos en la tabla pivote de la bd
     public function permission_assignment(Request $request, User $user)
     {
+        $this->authorize('assign_permission', $user);
         $user->permissions()->sync($request->permissions);
         toast('Permisos asignados','success','top-right');
         return redirect()->route('backoffice.user.show', $user);
@@ -90,12 +99,14 @@ class UserController extends Controller
     //mostrar formulario para importar usuarios
     public function import() 
     {
+        $this->authorize('import', User::class);
         return view('theme.backoffice.pages.user.import');
     }
 
     // importar usuario desde una tabla de excel
     public function make_import(Request $request)
     {
+        $this->authorize('import', User::class);
         Excel::import(new UsersImport, $request->file('excel'));
         toast('Usuarios importados','success','top-right');
         return redirect()->route('backoffice.user.index');

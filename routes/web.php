@@ -8,6 +8,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('test', function(){
+    return 'Hola';
+})->middleware('role:paciente');
+
 Route::get('/', function(){
     return view('welcome');
 });

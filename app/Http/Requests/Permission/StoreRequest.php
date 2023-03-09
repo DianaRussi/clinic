@@ -9,7 +9,7 @@ class StoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return $this->user()->can('create', Permission::class);
     }
 
     public function rules()

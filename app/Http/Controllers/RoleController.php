@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+	    $this->middleware('role:' . config('app.admin_role'));
+    }
     public function index()
     {
-        //pendientes añadir autorizaciones
+        $this->authorize('index',Role::class);
         return view ('theme.backoffice.pages.role.index', [
             'roles' => Role::all(),
         ]);
@@ -19,6 +23,7 @@ class RoleController extends Controller
 
     public function create()
     {
+        $this->authorize('create',Role::class);
         return view('theme.backoffice.pages.role.create');
     }
 
@@ -30,6 +35,7 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
+        $this->authorize('view',$role);
         return view('theme.backoffice.pages.role.show', [
             'role' => $role,
             'permissions' => $role->permissions
@@ -38,8 +44,8 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-         //pendientes añadir autorizaciones
-         return view('theme.backoffice.pages.role.edit', [
+        $this->authorize('update', $role);
+        return view('theme.backoffice.pages.role.edit', [
             'role' => $role,
         ]);
     }
@@ -52,7 +58,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        //pendientes añadir autorizaciones
+        $this->authorize('delete', $role);
         $role->delete();
         toast('Rol eliminado','success','top-right');
         return redirect()->route('backoffice.role.index');
