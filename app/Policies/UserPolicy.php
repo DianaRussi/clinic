@@ -24,10 +24,11 @@ class UserPolicy
         return $user->has_permission('create-user');
     }
 
-
     public function update(User $user, User $model)
     {
-        return $user->has_permission('update-user');
+        return ($user->has_permission('update-user') &&
+                $user->has_role(config('app.admin_role')))  ||
+                $user->id == $model->id;
     }
 
     public function delete(User $user, User $model)
@@ -57,5 +58,9 @@ class UserPolicy
     public function import(User $user)
     {
         return $user->has_permission('import-user');
+    }
+    public function update_password(User $user, User $model)
+    {
+        return $user->id == $model->id;
     }
 }

@@ -48,7 +48,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        return view('theme.backoffice.pages.user.edit',[
+        $view = (isset($_GET['view'])) ? $_GET['view']: null;
+        return view($user->edit_view($view),[
             'user' => $user,
         ]);
     }
@@ -56,7 +57,8 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->my_update($request);
-        return redirect()->route('backoffice.user.show', $user);
+        $view = (isset($_GET['view'])) ? $_GET['view']: null;
+        return redirect()->route($user->user_show(), $user);
     }
 
     public function destroy(User $user)
@@ -123,5 +125,16 @@ class UserController extends Controller
         return view('theme.frontoffice.pages.user.profile',[
             'user' => $user,
         ]);
+    }
+
+    public function edit_password()
+    {
+        $this->authorize('update_password', auth()->user());
+        return view('theme.frontoffice.pages.user.edit_password');
+    }
+
+    public function change_password()
+    {
+        $this->authorize('update_password', User::class);
     }
 }

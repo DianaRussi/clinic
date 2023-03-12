@@ -47,4 +47,5 @@ class Role extends Model
     // VALIDACIÓN
     // RECUPERACIÓN DE INFORMACIÓN
     // OTRAS OPERACIONES 
+    
 }
