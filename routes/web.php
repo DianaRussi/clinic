@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,4 +40,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // FRONTOFFICE
 Route::group(['as' => 'frontoffice.' ], function(){
     Route::get('profile', [UserController::class,'profile'])->name('user.profile');
+    Route::get('patient/schedule', [PatientController::class,'schedule'])->name('patient.schedule');
+    Route::get('patient/appointments', [PatientController::class,'appointments'])->name('patient.appointments');
 });

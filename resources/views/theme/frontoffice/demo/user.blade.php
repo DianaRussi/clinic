@@ -1,6 +1,8 @@
 @extends('theme.frontoffice.layouts.main')
-@section('title', 'Perfil de ' . $user->name)
+@section('title', '')
 @section('head')
+@endsection
+@section('nav')
 @endsection
 @section('content')
 <div class="container">
@@ -14,10 +16,6 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">@yield('title')</span>
-                    <p><strong>Nombre: </strong>{{ $user->name }}</p>
-                    <p><strong>Edad: </strong>{{ $user->age() }}</p>
-                    <p><strong>Email: </strong>{{ $user->email }}</p>
-                    <p><strong>Miembro desde: </strong>{{ $user->created_at->diffForHumans() }}</p>
                 </div>
             </div>
         </div>

@@ -119,6 +119,9 @@ class UserController extends Controller
     //mostrar perfil de usuario
     public function profile()
     {
-        return view('theme.frontoffice.pages.user.profile');
+        $user = auth()->user();
+        return view('theme.frontoffice.pages.user.profile',[
+            'user' => $user,
+        ]);
     }
 }
