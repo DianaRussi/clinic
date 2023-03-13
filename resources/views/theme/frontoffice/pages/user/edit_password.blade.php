@@ -46,7 +46,7 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="password-confirm" type="password" name="password-confirm">
+                                    <input id="password-confirm" type="password" name="password_confirmation">
                                     <label for="password-confirm">Confirmar contraseña</label>
                                 </div>
                             </div>

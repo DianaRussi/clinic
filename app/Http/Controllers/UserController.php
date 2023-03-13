@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use App\Models\User;
 use App\Models\Role;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     public function __construct()
@@ -133,8 +136,11 @@ class UserController extends Controller
         return view('theme.frontoffice.pages.user.edit_password');
     }
 
-    public function change_password()
+    public function change_password(ChangePasswordRequest $request)
     {
-        $this->authorize('update_password', User::class);
+        $request->user()->password = Hash::make($request->password);
+        $request->user()->save();
+        toast('Contraseña actualizada','success','top-right');
+        return redirect()->back();
     }
 }
